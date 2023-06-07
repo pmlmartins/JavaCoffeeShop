@@ -1,5 +1,6 @@
 package nl.brianvermeer.workshop.coffee.controller;
 
+import java.util.UUID;
 import nl.brianvermeer.workshop.coffee.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class UploadController {
     }
 
     @PostMapping("/uploadimage") public String uploadImage(Model model, @RequestParam("image") MultipartFile file, Principal principal) throws IOException {
-        var name = file.getOriginalFilename().replace(" ", "_");
+        var name = UUID.randomUUID().toString();
         var fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, name);
         Files.write(fileNameAndPath, file.getBytes());
         model.addAttribute("msg", "Uploaded images: " + name);
